@@ -32,7 +32,7 @@
 
 #include <stddef.h>
 #if !defined(PX_GENERATE_META_DATA)
-#include <ciso646>  
+#include <ciso646>
 #endif
 /** \addtogroup foundation
   @{
@@ -74,13 +74,13 @@ Compiler defines, see http://sourceforge.net/p/predef/wiki/Compilers/
 #endif
 #elif defined(__clang__)
 #define PX_CLANG 1
-	#if defined (__clang_major__) 
+	#if defined (__clang_major__)
 		#define PX_CLANG_MAJOR __clang_major__
 	#elif defined (_clang_major)
 		#define PX_CLANG_MAJOR _clang_major
 	#else
 		#define PX_CLANG_MAJOR 0
-	#endif	
+	#endif
 #elif defined(__GNUC__) // note: __clang__ implies __GNUC__
 #define PX_GCC 1
 #else
@@ -94,12 +94,6 @@ Operating system defines, see http://sourceforge.net/p/predef/wiki/OperatingSyst
 #define PX_XBOXONE 1
 #elif defined(_GAMING_XBOX) || defined (_GAMING_XBOX_SCARLETT)
 #define PX_XBOX_SERIES_X 1
-#elif defined(WINAPI_FAMILY) && WINAPI_FAMILY == WINAPI_FAMILY_APP
-#define PX_UWP 1
-#elif defined(_WIN64) // note: _XBOX_ONE implies _WIN64
-#define PX_WIN64 1
-#elif defined(_WIN32) // note: _M_PPC implies _WIN32
-#define PX_WIN32 1
 #elif defined(__ANDROID__)
 #define PX_ANDROID 1
 #elif defined(__linux__) || defined (__EMSCRIPTEN__) // note: __ANDROID__ implies __linux__
@@ -526,7 +520,7 @@ protected:                                                                      
 	Class& operator=(const Class&);
 
 #ifndef DISABLE_CUDA_PHYSX
-//CUDA is currently supported only on windows 
+//CUDA is currently supported only on windows
 #define PX_SUPPORT_GPU_PHYSX ((PX_WINDOWS_FAMILY) || (PX_LINUX && PX_X64))
 #else
 #define PX_SUPPORT_GPU_PHYSX 0

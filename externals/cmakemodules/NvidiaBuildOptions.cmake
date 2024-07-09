@@ -43,11 +43,11 @@ IF(NV_USE_GAMEWORKS_OUTPUT_DIRS)
 			SET(EXE_SUFFIX "_32")
 		ENDIF()
 	ENDIF()
-	
+
 	IF (NOT DEFINED PX_OUTPUT_LIB_DIR)
 		MESSAGE(FATAL_ERROR "When using the GameWorks output structure you must specify PX_OUTPUT_LIB_DIR as the base")
 	ENDIF()
-	
+
 	IF (NOT DEFINED PX_OUTPUT_BIN_DIR)
 		MESSAGE(FATAL_ERROR "When using the GameWorks output structure you must specify PX_OUTPUT_BIN_DIR as the base")
 	ENDIF()
@@ -63,7 +63,7 @@ IF(NV_USE_GAMEWORKS_OUTPUT_DIRS)
 	# Need a different format for CUDA
    	SET(CUDA_DEBUG_FLAG "-DNDEBUG ${DISABLE_ITERATOR_DEBUGGING_CUDA}")
    	SET(CUDA_NDEBUG_FLAG "-DNDEBUG")
-   	
+
 	SET(CUDA_CRT_COMPILE_OPTIONS_NDEBUG "")
 	SET(CUDA_CRT_COMPILE_OPTIONS_DEBUG "")
 
@@ -98,14 +98,14 @@ IF(NV_USE_GAMEWORKS_OUTPUT_DIRS)
 
 	GetPlatformBinName(PLATFORM_BIN_NAME ${LIBPATH_SUFFIX})
 
-	
+
 	SET(PX_ROOT_LIB_DIR "bin/${PLATFORM_BIN_NAME}" CACHE INTERNAL "Relative root of the lib output directory")
 	SET(PX_ROOT_EXE_DIR "bin/${PLATFORM_BIN_NAME}" CACHE INTERNAL "Relative root dir of the exe output directory")
 
 	IF (NOT DEFINED PX_OUTPUT_ARCH)  # platforms with fixed arch like ps4 dont need to have arch defined
 		SET(EXE_SUFFIX "")
 	ENDIF()
-	
+
 	SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG   "${PX_OUTPUT_LIB_DIR}/${PX_ROOT_LIB_DIR}/debug"   )
 	SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_PROFILE "${PX_OUTPUT_LIB_DIR}/${PX_ROOT_LIB_DIR}/profile" )
 	SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_CHECKED "${PX_OUTPUT_LIB_DIR}/${PX_ROOT_LIB_DIR}/checked" )
@@ -120,7 +120,7 @@ IF(NV_USE_GAMEWORKS_OUTPUT_DIRS)
 	# Override our normal PX_ROOT_EXE_DIR for Android
 	IF(TARGET_BUILD_PLATFORM STREQUAL "Android")
 		SET(PX_ROOT_EXE_DIR "bin/${COMPILER_AND_PLATFORM}/${ANDROID_ABI}/${CM_ANDROID_FP}" CACHE INTERNAL "Relative root dir of the exe output directory")
-	ENDIF()	
+	ENDIF()
 
 	# RFC 108, we're doing EXEs as the special case since there will be presumable be less of those.
 	SET(PX_EXE_OUTPUT_DIRECTORY_DEBUG 		"${PX_OUTPUT_BIN_DIR}/${PX_ROOT_EXE_DIR}/debug"	  CACHE INTERNAL "Directory to put debug exes in")
@@ -140,7 +140,7 @@ ELSE()
 		SET(LIBPATH_SUFFIX "x64")
 	ELSE()
 		SET(LIBPATH_SUFFIX "x86")
-	ENDIF()	
+	ENDIF()
 
 	SET(DISABLE_ITERATOR_DEBUGGING "/D \"_HAS_ITERATOR_DEBUGGING=0\" /D \"_ITERATOR_DEBUG_LEVEL=0\"")
 	SET(DISABLE_ITERATOR_DEBUGGING_CUDA "-D_HAS_ITERATOR_DEBUGGING=0 -D_ITERATOR_DEBUG_LEVEL=0")
@@ -150,7 +150,7 @@ ELSE()
 	# Need a different format for CUDA
    	SET(CUDA_DEBUG_FLAG "-DNDEBUG ${DISABLE_ITERATOR_DEBUGGING_CUDA}")
    	SET(CUDA_NDEBUG_FLAG "-DNDEBUG")
-   	
+
 	SET(CUDA_CRT_COMPILE_OPTIONS_NDEBUG "")
 	SET(CUDA_CRT_COMPILE_OPTIONS_DEBUG "")
 
@@ -179,7 +179,7 @@ ELSE()
 			SET(CUDA_CRT_COMPILE_OPTIONS_DEBUG "/MD")
 	    ENDIF()
 	ENDIF()
-	
+
 	IF(DEFINED PX_OUTPUT_EXE_DIR)
 		SetExeOutputPath(${PX_OUTPUT_EXE_DIR})
 	ENDIF()
@@ -210,11 +210,11 @@ ELSE()
 ENDIF()
 
 # Can no longer just use LIBPATH_SUFFIX since it depends on build type
-IF(CMAKE_CL_64)
+IF(CMAKE_SIZEOF_VOID_P)
 	SET(RESOURCE_LIBPATH_SUFFIX "x64")
-ELSE(CMAKE_CL_64)
+ELSE(CMAKE_SIZEOF_VOID_P)
 	SET(RESOURCE_LIBPATH_SUFFIX "x86")
-ENDIF(CMAKE_CL_64)				
+ENDIF(CMAKE_SIZEOF_VOID_P)
 
 
 # removes characters from the version string and leaves just numbers
@@ -222,7 +222,7 @@ FUNCTION(StripPackmanVersion IN_VERSION _OUTPUT_VERSION)
 
   STRING(REGEX REPLACE "([^0-9.])" ""
     OUT_V ${IN_VERSION})
-    
+
   STRING(REPLACE ".." "."
     OUT_V2 ${OUT_V})
 

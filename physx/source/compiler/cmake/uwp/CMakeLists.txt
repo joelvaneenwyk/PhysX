@@ -27,15 +27,15 @@
 
 OPTION(PX_COPY_EXTERNAL_DLL "Copy external dlls into SDK bin directory" OFF)
 
-# We define the CXX flags for this CMakeLists and all others that are included afterwards. This is a GLOBAL setting. 
+# We define the CXX flags for this CMakeLists and all others that are included afterwards. This is a GLOBAL setting.
 # If/when the solutions go standalone (say, samples and visual tests) - those CMakeLists will need to be fixed.
 
 SET(PHYSX_WARNING_DISABLES "/wd4514 /wd4820 /wd4127 /wd4710 /wd4711 /wd4577 /wd4530 /wd4324")
 
 IF(PX_FLOAT_POINT_PRECISE_MATH)
 	SET(PHYSX_FP_MODE "/fp:precise")
-ELSE()		
-	SET(PHYSX_FP_MODE "/fp:fast")	
+ELSE()
+	SET(PHYSX_FP_MODE "/fp:fast")
 ENDIF()
 
 # Cache the CXX flags so the other CMakeLists.txt can use them if needed
@@ -54,16 +54,16 @@ SET(CMAKE_CXX_FLAGS_PROFILE ${PHYSX_CXX_FLAGS_PROFILE})
 SET(CMAKE_CXX_FLAGS_RELEASE ${PHYSX_CXX_FLAGS_RELEASE})
 
 # cache lib type defs
-IF(PX_GENERATE_STATIC_LIBRARIES)	
+IF(PX_GENERATE_STATIC_LIBRARIES)
 	SET(PHYSX_LIBTYPE_DEFS "PX_PHYSX_STATIC_LIB;" CACHE INTERNAL "PhysX lib type defs")
 ENDIF()
 
 # Build PDBs for all configurations
 SET(CMAKE_SHARED_LINKER_FLAGS "/DEBUG")
 
-IF(CMAKE_CL_64)
+IF(CMAKE_SIZEOF_VOID_P)
 	SET(WIN64_FLAG "WIN64")
-ENDIF(CMAKE_CL_64)				
+ENDIF(CMAKE_SIZEOF_VOID_P)
 
 IF(PX_SCALAR_MATH)
 	SET(SCALAR_MATH_FLAG "PX_SIMD_DISABLED")
@@ -118,10 +118,10 @@ SET(PHYSXDISTRO_LIBS PhysXFoundation PhysX PhysXCharacterKinematic PhysXPvdSDK P
 INSTALL(
 	TARGETS ${PHYSXDISTRO_LIBS}
 	EXPORT PhysXSDK
-	DESTINATION $<$<CONFIG:debug>:${PX_ROOT_LIB_DIR}/debug>$<$<CONFIG:release>:${PX_ROOT_LIB_DIR}/release>$<$<CONFIG:checked>:${PX_ROOT_LIB_DIR}/checked>$<$<CONFIG:profile>:${PX_ROOT_LIB_DIR}/profile>	
+	DESTINATION $<$<CONFIG:debug>:${PX_ROOT_LIB_DIR}/debug>$<$<CONFIG:release>:${PX_ROOT_LIB_DIR}/release>$<$<CONFIG:checked>:${PX_ROOT_LIB_DIR}/checked>$<$<CONFIG:profile>:${PX_ROOT_LIB_DIR}/profile>
 	)
 
 IF(PX_GENERATE_STATIC_LIBRARIES)
-	STRING(APPEND HEADER_CONTENT "#define PX_PHYSX_STATIC_LIB\n")	
+	STRING(APPEND HEADER_CONTENT "#define PX_PHYSX_STATIC_LIB\n")
 ENDIF()
-STRING(APPEND HEADER_CONTENT "#define DISABLE_CUDA_PHYSX\n")	
+STRING(APPEND HEADER_CONTENT "#define DISABLE_CUDA_PHYSX\n")
