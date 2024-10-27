@@ -106,6 +106,10 @@ Operating system defines, see http://sourceforge.net/p/predef/wiki/OperatingSyst
 #define PX_PS4 1
 #elif defined(__NX__)
 #define PX_SWITCH 1
+// #hack #joelvaneenwyk Fallback to detect Windows in a not-so-robust way. Do not copy.
+#elif defined(_WIN32)
+#define PX_WIN32 1
+#define PX_WIN64 1
 #else
 #error "Unknown operating system"
 #endif
